@@ -10,20 +10,25 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class PhoneNumber {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int regNo;
+	@NonNull
 	private Long phoneNo;
+	@NonNull
 	private String provider;
 	@ManyToOne(targetEntity = Person.class,cascade = CascadeType.ALL)
-	@JoinColumn(name = "person_id",referencedColumnName = "id")
+	@JoinColumn(name = "person_id",referencedColumnName = "pid")
 	private Person person;
 
 }

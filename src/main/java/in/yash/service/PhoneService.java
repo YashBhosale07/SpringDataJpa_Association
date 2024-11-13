@@ -1,5 +1,9 @@
 package in.yash.service;
 
-public interface PhoneService {
+import in.yash.model.PhoneNumber;
 
+public interface PhoneService {
+	
+	String savePhoneNumber(Iterable<PhoneNumber> phoneNumber);
+	
 }
