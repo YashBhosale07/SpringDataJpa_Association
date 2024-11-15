@@ -1,25 +1,28 @@
 package in.yash.model;
-
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-
 public class Person {
 	
 	@Id
@@ -29,8 +32,9 @@ public class Person {
 	private String name;
 	@lombok.NonNull
 	private String address;
-	@OneToMany(targetEntity = PhoneNumber.class,cascade = CascadeType.ALL)
-	@JoinColumn(name = "phoneid",referencedColumnName = "regNo")
+	@JsonManagedReference
+	@OneToMany(targetEntity = PhoneNumber.class,cascade = CascadeType.ALL,mappedBy = "person",fetch = FetchType.LAZY)
 	private Set<PhoneNumber>contactDetails;
+	
 		
 }

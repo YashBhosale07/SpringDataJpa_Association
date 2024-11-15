@@ -1,20 +1,24 @@
 package in.yash.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -26,9 +30,11 @@ public class PhoneNumber {
 	@NonNull
 	private Long phoneNo;
 	@NonNull
-	private String provider;
-	@ManyToOne(targetEntity = Person.class,cascade = CascadeType.ALL)
-	@JoinColumn(name = "person_id",referencedColumnName = "pid")
+	private String provider;	
+	@JsonBackReference
+	@ManyToOne(targetEntity = Person.class,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private Person person;
+	
+	
 
 }

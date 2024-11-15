@@ -1,8 +1,6 @@
 package in.yash.service;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import in.yash.model.PhoneNumber;
 import in.yash.repo.PhoneRepo;
 import java.util.*;
@@ -19,6 +17,12 @@ public class PhoneServiceImpl implements PhoneService {
 			phoneRepo.save(number);
 		}
 		return ((Set<PhoneNumber>) phoneNumber).size()+" ";
+	}
+
+	@Override
+	public PhoneNumber getPhoneById(int id) {
+		return phoneRepo.findById(id).get();
+	
 	}
 
 }

@@ -7,4 +7,5 @@ public interface PersonService {
 	public Person getPerson(int id);
 	public String deletePerson(int id);
 	public Person updatePerson(Person person);
+	public Person updatePerson(int id, String service, String name);
 }

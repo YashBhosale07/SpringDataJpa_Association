@@ -1,10 +1,11 @@
 package in.yash.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import in.yash.exceptionClasses.PersonNotFoundException;
 import in.yash.model.Person;
+import in.yash.model.PhoneNumber;
 import in.yash.repo.PersonRepo;
+import jakarta.transaction.Transactional;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -18,6 +19,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
+	@Transactional
 	public Person getPerson(int id) {
 		Person person =personRepo.findById(id).get();
 		if(person==null) {
@@ -34,6 +36,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
+	@Transactional
 	public Person updatePerson(Person person) {
 		Person p=personRepo.findById(person.getPid()).get();
 		if(p==null) {
@@ -51,6 +54,21 @@ public class PersonServiceImpl implements PersonService {
 		
 		return person;
 	}
+
+	@Override
+	@Transactional
+	public Person updatePerson(int id, String service, String name) {
+		Person p=personRepo.findById(id).get();
+		p.setName(name);
+		for (PhoneNumber number : p.getContactDetails()) {
+			if(number.getRegNo()==1) {
+				number.setProvider(service);
+			}
+		}
+		return p;
+	}
+	
+	
 	
 	
 }
