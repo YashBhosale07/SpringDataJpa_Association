@@ -21,15 +21,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class PhoneNumber {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int regNo;
-	@NonNull
 	private Long phoneNo;
-	@NonNull
 	private String provider;	
 	@JsonBackReference
 	@ManyToOne(targetEntity = Person.class,cascade = CascadeType.ALL,fetch = FetchType.LAZY)

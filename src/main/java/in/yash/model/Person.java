@@ -22,15 +22,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Person {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int pid;
-	@lombok.NonNull
 	private String name;
-	@lombok.NonNull
 	private String address;
 	@JsonManagedReference
 	@OneToMany(targetEntity = PhoneNumber.class,cascade = CascadeType.ALL,mappedBy = "person",fetch = FetchType.LAZY)

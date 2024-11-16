@@ -1,4 +1,6 @@
 package in.yash.service;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import in.yash.exceptionClasses.PersonNotFoundException;
@@ -15,6 +17,9 @@ public class PersonServiceImpl implements PersonService {
 	
 	@Override
 	public Person savePerson(Person person) {
+		for (PhoneNumber number : person.getContactDetails()) {
+			number.setPerson(person);
+		}
 		return personRepo.save(person);
 	}
 
@@ -28,12 +33,6 @@ public class PersonServiceImpl implements PersonService {
 		return person;
 	}
 
-	@Override
-	public String deletePerson(int id) {
-		Person person=personRepo.findById(id).orElseThrow(()->new PersonNotFoundException("Person is not present with id: "+id));
-		personRepo.deleteById(id);
-		return "Person is deleted by id: "+id;
-	}
 
 	@Override
 	@Transactional
@@ -66,6 +65,16 @@ public class PersonServiceImpl implements PersonService {
 			}
 		}
 		return p;
+	}
+
+	@Override
+	public String deleteByPersonId(int id) {
+		Optional<Person>person=personRepo.findById(id);
+		if(person.isPresent()) {
+			personRepo.deleteById(id);
+			return "Person delete by id: "+id;
+		}
+		return "Person not found with id: "+id;
 	}
 	
 	
